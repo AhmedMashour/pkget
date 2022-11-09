@@ -8,6 +8,7 @@ echo export PATH=$PATH:$HOME:aptitude/usr/bin:aptitude/bin:aptitude/sbin:aptitud
 echo "starting install..."
 echo curent user is "$USER"
 echo "---------------------"
+echo $1
 
 set -e
 

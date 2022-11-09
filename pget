@@ -3,8 +3,8 @@
 # bin/compile <build-dir> <cache-dir>
 # copyleft 2020 GNU GPLv3 
 # buy enp0s10 with <3 https://github.com/z3r0n3t
-echo export PATH=$PATH:$HOME:.apt/usr/bin:.apt/bin:.apt/sbin:.apt/usr/share:.apt/usr/lib >>  $HOME/.profile #don't just be shure 
-echo export PATH=$PATH:$HOME:.apt/usr/bin:.apt/bin:.apt/sbin:.apt/usr/share:.apt/usr/lib >> $HOME/.bashrc #be extra shure 
+echo export PATH=$PATH:$HOME:aptitude/usr/bin:aptitude/bin:aptitude/sbin:aptitude/usr/share:aptitude/usr/lib >>  $HOME/.profile #don't just be shure 
+echo export PATH=$PATH:$HOME:aptitude/usr/bin:aptitude/bin:aptitude/sbin:aptitude/usr/share:aptitude/usr/lib >> $HOME/.bashrc #be extra shure 
 echo "starting install..."
 echo curent user is "$USER"
 echo "---------------------"
@@ -64,16 +64,16 @@ for PACKAGE in $*; do
   fi
 done
 
-mkdir -p $BUILD_DIR/.apt
+mkdir -p $BUILD_DIR/aptitude
 
 for DEB in $(ls -1 $APT_CACHE_DIR/archives/*.deb); do
   topic "Installing $(basename $DEB)"
-  dpkg -x $DEB $BUILD_DIR/.apt/
+  dpkg -x $DEB $BUILD_DIR/aptitude/
 done
 
 topic "Rewrite package-config files"
 export TERM=xterm-256color
-find $BUILD_DIR/.apt -type f -ipath '*/pkgconfig/*.pc' | xargs --no-run-if-empty -n 1 sed -i -e 's!^prefix=\(.*\)$!prefix='$BUILD_DIR'/.apt\1!g'
+find $BUILD_DIR/aptitude -type f -ipath '*/pkgconfig/*.pc' | xargs --no-run-if-empty -n 1 sed -i -e 's!^prefix=\(.*\)$!prefix='$BUILD_DIR'/aptitude\1!g'
 # start logging
 clear
 echo "building logfile"
